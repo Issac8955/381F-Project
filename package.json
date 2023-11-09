@@ -4,6 +4,7 @@
     "author": "COMPS381F",
     "version": "0.0.1",
     "dependencies": {
+        "body-parser": "^1.20.2",
         "ejs": "^3.1.9",
         "express": "*",
         "express-formidable": "*",
