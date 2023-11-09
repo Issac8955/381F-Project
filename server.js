@@ -17,10 +17,12 @@ app.post('/login',function(req,res){
 	var password = req.body.password;
 	//Change this to mongodb data
 	if(username = '123'&& password == '123'){
+		//change this to main.ejs
 		res.send('Check login')
 	}
 	else{
-		res.render('Fail to login')
+		//change this to main.ejs
+		res.send('Fail to login')
 	}
 })
 
