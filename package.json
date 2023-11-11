@@ -1,7 +1,7 @@
 {
     "name": "server",
     "description": "COMPS381F-Project",
-    "author": "COMPS381F",
+    "author": "Cheng Tsz Tsun, Lo Pak Sam",
     "version": "0.0.1",
     "dependencies": {
         "body-parser": "^1.20.2",
@@ -9,13 +9,11 @@
         "express": "*",
         "express-formidable": "*",
         "mongodb": "3.6.3",
-        "cookie-session": "*"
+        "cookie-session": "*",
+        "nodemon": "3.0.1" 
     },
     "engine": "node >= 12.0.0",
     "scripts": {
         "start": "nodemon server.js"
-    },
-    "devDependencies": {
-        "nodemon": "^3.0.1"
     }
 }
