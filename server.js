@@ -8,13 +8,12 @@ const MongoClient =require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 const fs = require('fs');
 const formidable = require('express-formidable');
-const mongourl = ''
-;
+const mongourl = 'mongodb+srv://Issac1006:PFDvYI0G43fHP8BI@cluster0.vj8rhnh.mongodb.net/Cluster0?retryWrites=true&w=majority';
 const dbName = 'Project';
 
 
 app.set('view engine', 'ejs');
-
+app.set('views','./views');
 
 //Authenication
 const SECRETKEY = '381F-Project';
@@ -36,14 +35,42 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 // Redirect to Login Page (Not Logging in)/ Main Page (Logging in)
-app.get('/', (req,res) => {
+app.get('/', async (req,res) => {
 	console.log(req.session);
 	if (!req.session.authenticated) {    
 		res.redirect('/login');
 	} else {
 		res.status(200).render('main',{name:req.session.username});
+        var dataSet = new Array();
+        const client = new MongoClient(mongourl);
+        await client.connect();
+        const db = client.db(dbName);
+        //res.render('main',{name:req.session.username});
+        //read data
+        const data = db.collection("Inventory").find();
+        /*
+         data.forEach(element => {
+            dataSet = {
+                inv_id: element.inv_id,
+                inv_name: element.inv_name,
+                inv_type: element.inv_type,
+                quantity: element.quantity
+            };
+            return dataSet;
+        });*/
+        //Check if data has been selected or not
+
+
+        await data.forEach((element) =>{
+            dataSet.push(element);
+        });
+
+        //Check the whole array
+        console.log({dataSet:dataSet});
+       
 	}
 });
+
 
 // Load Login page
 app.get('/login', (req,res) => {
