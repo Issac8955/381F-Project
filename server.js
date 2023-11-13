@@ -45,17 +45,13 @@ app.get('/main', async (req,res) => {
     if (!req.session.authenticated) {    
 		res.redirect('/login');
 	} else {
-<<<<<<< HEAD
         const client = new MongoClient(mongourl);
         await client.connect();
         const db = client.db(dbName);
         var dataSet = new Array();
-=======
-        var dataSet = new Array();
         const client = new MongoClient(mongourl);
         await client.connect();
         const db = client.db(dbName);
->>>>>>> 2f03f14f4adcb9bd3f54277e81db2810fc8ff985
         //res.render('main',{name:req.session.username});
         //read data
         const data = db.collection("Inventory").find();
@@ -140,13 +136,6 @@ app.post('/create', (req, res) => {
             client.close();
             console.log("Closed DB connection");
             res.redirect('/main');
-<<<<<<< HEAD
-        });
-=======
-            
-        });
-       
->>>>>>> 2f03f14f4adcb9bd3f54277e81db2810fc8ff985
     });
     client.close();
 });
@@ -169,8 +158,6 @@ app.get('/delete?:id', (req,res) => {
             console.log("Data has been deleted");
             });
         });
-
-<<<<<<< HEAD
         res.redirect('/main');
     });
 
@@ -204,8 +191,7 @@ app.get('/delete?:id', (req,res) => {
 
         res.redirect('/main');
     });
->>>>>>> 2f03f14f4adcb9bd3f54277e81db2810fc8ff985
-
+    
   // Fetch the document to be updated
   const item = await db.collection("Inventory").findOne({ _id: ObjectID(id) });
 
