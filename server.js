@@ -25,7 +25,7 @@ const users = new Array(
 );
 
 var document = {}
-var dataSet = new Array();
+
 
 app.use(session({
   name: 'loginSession',
@@ -45,6 +45,7 @@ app.get('/main', async (req,res) => {
     if (!req.session.authenticated) {    
 		res.redirect('/login');
 	} else {
+        var dataSet = new Array();
         const client = new MongoClient(mongourl);
         await client.connect();
         const db = client.db(dbName);
@@ -118,7 +119,6 @@ app.post('/create', (req, res) => {
         assert.equal(null, err);
         console.log("Connected successfully to MongoDB.");
         const db = client.db(dbName);
-
         const document = {	
             inv_id: req.body.id,
             inv_name: req.body.inv_name,
@@ -133,9 +133,34 @@ app.post('/create', (req, res) => {
             client.close();
             console.log("Closed DB connection");
             res.redirect('/main');
+            
         });
+       
     });
 });
+
+
+//Delete
+app.get('/delete?:id', (req,res) => {
+    console.log("User entered delete page");
+    const client = new MongoClient(mongourl);
+    const deletedID = req.query._id;
+    client.connect((err) => {
+        assert.equal(null, err);
+        console.log("Connected successfully to MongoDB.");
+        console.log(typeof(deletedID));
+        const db = client.db(dbName);
+        
+        db.collection("Inventory").deleteOne({_id: ObjectID(deletedID)},(err,result) =>{
+            if(err)
+            throw err;
+            client.close();
+            console.log("Data has been deleted");
+            });
+        });
+
+        res.redirect('/main');
+    });
 
 //Create the server with port 8099
 app.listen(8099);

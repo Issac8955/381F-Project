@@ -51,9 +51,9 @@
                           <td><%= item.quantity%></td>
                           <td><a href="/details?_id=<%= item._id %>" class="btn btn-outline-primary" role="button" style="background-color: rgb(26, 0, 118);">Detail</td>
                             <td><a href="/update?_id=<%= item._id %>" class="btn btn-outline-primary" role="button" style="background-color: rgb(26, 0, 118);">Update</td>
-                            <td><a href="/delete?_id=<%= item._id %>" class="btn btn-outline-primary" role="button" style="background-color: rgb(26, 0, 118);">Delete</td>
-                          
+                            <td><a href="/delete?_id=<%= item._id %>" class="btn btn-outline-primary" role="button" style="background-color: rgb(26, 0, 118);">Delete</td>         
                       </tr>
+                        <input type="hidden" name="id" value="<%= item._id %>">
                       <%} )%>
 
                   </tbody>
