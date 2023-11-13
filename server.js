@@ -49,13 +49,9 @@ app.get('/main', async (req,res) => {
         await client.connect();
         const db = client.db(dbName);
         var dataSet = new Array();
-        const client = new MongoClient(mongourl);
-        await client.connect();
-        const db = client.db(dbName);
         //res.render('main',{name:req.session.username});
         //read data
         const data = db.collection("Inventory").find();
-
         await data.forEach((element) =>{
             dataSet.push(element);
         });
@@ -140,6 +136,8 @@ app.post('/create', (req, res) => {
     client.close();
 });
 
+});
+
 //Delete
 app.get('/delete?:id', (req,res) => {
     console.log("User entered delete page");
@@ -169,7 +167,8 @@ app.get('/update', async (req, res) => {
   // Connect to MongoDB
   await client.connect();
   const db = client.db(dbName);
-=======
+
+
 //Delete
 app.get('/delete?:id', (req,res) => {
     console.log("User entered delete page");
