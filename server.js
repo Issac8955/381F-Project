@@ -25,6 +25,7 @@ const users = new Array(
 );
 
 var document = {}
+var dataSet = new Array();
 
 app.use(session({
   name: 'loginSession',
@@ -34,13 +35,16 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
+app.get('/',(req,res) => {
+    res.redirect('/login');
+});
+
 // Redirect to Login Page (Not Logging in)/ Main Page (Logging in)
-app.get('/', async (req,res) => {
+app.get('/main', async (req,res) => {
 	console.log(req.session);
-	if (!req.session.authenticated) {    
+    if (!req.session.authenticated) {    
 		res.redirect('/login');
 	} else {
-        var dataSet = new Array();
         const client = new MongoClient(mongourl);
         await client.connect();
         const db = client.db(dbName);
@@ -53,9 +57,10 @@ app.get('/', async (req,res) => {
         });
 
         //Check the whole array
-        console.log({dataSet:dataSet});
+        //console.log({dataSet:dataSet});
         res.status(200).render('main',{dataSet,name:req.session.username});
         //res.status(200).render('main',{name:req.session.username},);
+        client.close();
 	}
 });
 
@@ -66,7 +71,6 @@ app.get('/login', (req,res) => {
 });
 
 //login function
-
 app.post('/login', (req,res) => {
 	var username = req.body.username;
 	var password = req.body.password;
@@ -77,7 +81,7 @@ app.post('/login', (req,res) => {
 			req.session.username = req.body.username;
 		}
 	});
-	res.redirect('/');
+	res.redirect('/main');
 });
 
 // Load Main Page
@@ -88,12 +92,13 @@ app.get('/main',(req, res) => {
 // Logout function
 app.get('/logout', (req,res) => {
 	req.session = null;   // clear cookie
-	res.redirect('/');
+	res.redirect('/login');
 });
 
 // Render to Create Page
 app.get('/create',(req, res) =>{
-	res.status(200).render("create")
+        res.status(200).render("create");
+
 }); 
 
 // Create 
@@ -124,17 +129,13 @@ app.post('/create', (req, res) => {
         // Check all the fields of the form are filled in
             console.log("OK for creating a new document");
             createDocument(db, document, () => {
-                console.log("Created new document successfully");
-                client.close();
-                console.log("Closed DB connection");
-                res.status(200).render('main', {name:req.session.username});
-            });
-
+            console.log("Created new document successfully");
+            client.close();
+            console.log("Closed DB connection");
+            res.redirect('/main');
+        });
     });
 });
-
-
-
 
 //Create the server with port 8099
 app.listen(8099);
