@@ -24,11 +24,9 @@
          	<div class="row">
       		   <div class="col-md-6">
         		<h1>Inventory System</h1>
-        		<h1 class="username">Welcome: <%= name%></h1>
         		<h1 class="username">Hello <%= name%></h1>
-            		<a href="/create" class="btn btn-outline-primary" role="button" style="background-color: rgb(26, 0, 118);">Create</a>
-            		<a href="/logout" class="btn btn-outline-primary float-end" role="button" style="background-color: rgb(26, 0, 118);">Logout</a>
-
+            <a href="/create" class="btn btn-outline-primary" role="button" style="background-color: rgb(26, 0, 118);">Create</a>
+            <a href="/logout" class="btn btn-outline-primary float-end" role="button" style="background-color: rgb(26, 0, 118);">Logout</a>
             <div>
               <table id="inv_table" class="table table-sm">
                   <thead><tr class ="table=primary" ><th>Here Is Your Inventory</tr></th></thead>
@@ -52,23 +50,8 @@
                           <td><%= item.quantity%></td>
                           <td><a href="/details?_id=<%= item._id %>" class="btn btn-outline-primary" role="button" style="background-color: rgb(26, 0, 118);">Detail</td>
                             <td><a href="/update?_id=<%= item._id %>" class="btn btn-outline-primary" role="button" style="background-color: rgb(26, 0, 118);">Update</td>
-                            <td><a href="/delete?_id=<%= item._id %>" class="btn btn-outline-primary" role="button" style="background-color: rgb(26, 0, 118);">Delete</td>
-                          
-                      </tr>
-                      <input type="hidden" name = "id" value="<%=item._id%>">
-                            <td><a href="/delete?_id=<%= item._id %>" class="btn btn-outline-primary" role="button" style="background-color: rgb(26, 0, 118);">Delete</td>         
+                            <td><a href="/delete?_id=<%= item._id %>" class="btn btn-outline-primary" role="button" style="background-color: rgb(26, 0, 118);">Delete</td>       
                       </tr>
                         <input type="hidden" name="id" value="<%= item._id %>">
                       <%} )%>
-
                   </tbody>
-              </table>
-          </div>
-      </div>
-    </div>
-</div>
-</div>
-</div>
-</div>
-    </body>
-</html>
