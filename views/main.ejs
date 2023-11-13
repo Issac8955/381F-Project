@@ -24,13 +24,10 @@
          	<div class="row">
       		   <div class="col-md-6">
         		<h1>Inventory System</h1>
-<<<<<<< HEAD
         		<h1 class="username">Welcome: <%= name%></h1>
-=======
         		<h1 class="username">Hello <%= name%></h1>
->>>>>>> 2f03f14f4adcb9bd3f54277e81db2810fc8ff985
-            <a href="/create" class="btn btn-outline-primary" role="button" style="background-color: rgb(26, 0, 118);">Create</a>
-            <a href="/logout" class="btn btn-outline-primary float-end" role="button" style="background-color: rgb(26, 0, 118);">Logout</a>
+            		<a href="/create" class="btn btn-outline-primary" role="button" style="background-color: rgb(26, 0, 118);">Create</a>
+            		<a href="/logout" class="btn btn-outline-primary float-end" role="button" style="background-color: rgb(26, 0, 118);">Logout</a>
 
             <div>
               <table id="inv_table" class="table table-sm">
@@ -55,26 +52,21 @@
                           <td><%= item.quantity%></td>
                           <td><a href="/details?_id=<%= item._id %>" class="btn btn-outline-primary" role="button" style="background-color: rgb(26, 0, 118);">Detail</td>
                             <td><a href="/update?_id=<%= item._id %>" class="btn btn-outline-primary" role="button" style="background-color: rgb(26, 0, 118);">Update</td>
-<<<<<<< HEAD
                             <td><a href="/delete?_id=<%= item._id %>" class="btn btn-outline-primary" role="button" style="background-color: rgb(26, 0, 118);">Delete</td>
                           
                       </tr>
                       <input type="hidden" name = "id" value="<%=item._id%>">
-=======
                             <td><a href="/delete?_id=<%= item._id %>" class="btn btn-outline-primary" role="button" style="background-color: rgb(26, 0, 118);">Delete</td>         
                       </tr>
                         <input type="hidden" name="id" value="<%= item._id %>">
->>>>>>> 2f03f14f4adcb9bd3f54277e81db2810fc8ff985
                       <%} )%>
 
                   </tbody>
               </table>
           </div>
-<<<<<<< HEAD
       </div>
     </div>
 </div>
-=======
 
 
 
