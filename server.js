@@ -11,10 +11,9 @@ const formidable = require('express-formidable');
 const mongourl = 'mongodb+srv://Issac1006:PFDvYI0G43fHP8BI@cluster0.vj8rhnh.mongodb.net/Cluster0?retryWrites=true&w=majority';
 const dbName = 'Project';
 
-
 app.set('view engine', 'ejs');
 app.set('views','./views');
-
+app.set('views', __dirname + '/views');
 //Authenication
 const SECRETKEY = '381F-Project';
 
@@ -40,7 +39,6 @@ app.get('/', async (req,res) => {
 	if (!req.session.authenticated) {    
 		res.redirect('/login');
 	} else {
-		res.status(200).render('main',{name:req.session.username});
         var dataSet = new Array();
         const client = new MongoClient(mongourl);
         await client.connect();
@@ -67,7 +65,8 @@ app.get('/', async (req,res) => {
 
         //Check the whole array
         console.log({dataSet:dataSet});
-       
+        res.status(200).render('main',{dataSet,name:req.session.username},);
+        //res.status(200).render('main',{name:req.session.username},);
 	}
 });
 
