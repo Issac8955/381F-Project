@@ -8,7 +8,7 @@ const MongoClient =require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 const fs = require('fs');
 const formidable = require('express-formidable');
-const mongourl = 'mongodb+srv://Issac1006:PFDvYI0G43fHP8BI@cluster0.vj8rhnh.mongodb.net/Cluster0?retryWrites=true&w=majority';
+const mongourl = '';
 const dbName = 'Project';
 
 
