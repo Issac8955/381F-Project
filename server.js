@@ -45,10 +45,17 @@ app.get('/main', async (req,res) => {
     if (!req.session.authenticated) {    
 		res.redirect('/login');
 	} else {
+<<<<<<< HEAD
         const client = new MongoClient(mongourl);
         await client.connect();
         const db = client.db(dbName);
         var dataSet = new Array();
+=======
+        var dataSet = new Array();
+        const client = new MongoClient(mongourl);
+        await client.connect();
+        const db = client.db(dbName);
+>>>>>>> 2f03f14f4adcb9bd3f54277e81db2810fc8ff985
         //res.render('main',{name:req.session.username});
         //read data
         const data = db.collection("Inventory").find();
@@ -119,7 +126,6 @@ app.post('/create', (req, res) => {
         assert.equal(null, err);
         console.log("Connected successfully to MongoDB.");
         const db = client.db(dbName);
-
         const document = {	
             inv_id: req.body.id,
             inv_name: req.body.inv_name,
@@ -134,7 +140,13 @@ app.post('/create', (req, res) => {
             client.close();
             console.log("Closed DB connection");
             res.redirect('/main');
+<<<<<<< HEAD
         });
+=======
+            
+        });
+       
+>>>>>>> 2f03f14f4adcb9bd3f54277e81db2810fc8ff985
     });
     client.close();
 });
@@ -158,6 +170,7 @@ app.get('/delete?:id', (req,res) => {
             });
         });
 
+<<<<<<< HEAD
         res.redirect('/main');
     });
 
@@ -169,6 +182,29 @@ app.get('/update', async (req, res) => {
   // Connect to MongoDB
   await client.connect();
   const db = client.db(dbName);
+=======
+//Delete
+app.get('/delete?:id', (req,res) => {
+    console.log("User entered delete page");
+    const client = new MongoClient(mongourl);
+    const deletedID = req.query._id;
+    client.connect((err) => {
+        assert.equal(null, err);
+        console.log("Connected successfully to MongoDB.");
+        console.log(typeof(deletedID));
+        const db = client.db(dbName);
+        
+        db.collection("Inventory").deleteOne({_id: ObjectID(deletedID)},(err,result) =>{
+            if(err)
+            throw err;
+            client.close();
+            console.log("Data has been deleted");
+            });
+        });
+
+        res.redirect('/main');
+    });
+>>>>>>> 2f03f14f4adcb9bd3f54277e81db2810fc8ff985
 
   // Fetch the document to be updated
   const item = await db.collection("Inventory").findOne({ _id: ObjectID(id) });
