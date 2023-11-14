@@ -35,6 +35,8 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
+// View Part
+
 app.get('/',(req,res) => {
     res.redirect('/login');
 });
@@ -229,5 +231,48 @@ app.post('/update', (req, res) => {
     });
   });
 });
+
+const findDocument = (db, criteria, callback) => {
+    let cursor = db.collection('Inventory').find(criteria);
+    console.log(`findDocument: ${JSON.stringify(criteria)}`);
+    cursor.toArray((err,docs) => {
+        assert.equal(err,null);
+        console.log(`findDocument: ${docs.length}`);
+        callback(docs);
+    });
+}
+
+// Restful API
+
+// Create API
+
+// Read API
+app.get('/api/inventory/:inv_id', (req, res) => {
+	if (req.params.inv_id) {
+    		let inventory = {};
+    		inventory['inv_id'] = req.params.inv_id;
+    		const client = new MongoClient(mongourl);
+    		client.connect((err) => {
+      			assert.equal(null, err);
+      			const db = client.db(dbName);
+      			let cursor = db.collection('Inventory').find(inventory);
+      			console.log(`findDocument: ${JSON.stringify(inventory)}`);
+      			cursor.toArray((err, docs) => {
+        		assert.equal(err, null);
+        		console.log(`findDocument: ${docs.length}`);
+        		client.close();
+        		console.log("Closed DB connection");
+        		res.status(200).json(docs);
+      		});
+    	});
+  } else {
+    res.status(500).json({ "error": "missing inv_id" }).end();
+  }
+});
+
+// Update API
+
+// Delete API
+
 //Create the server with port 8099
 app.listen(8099);
