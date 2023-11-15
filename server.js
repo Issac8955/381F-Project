@@ -38,7 +38,12 @@ app.use(bodyParser.urlencoded({extended:true}));
 // View Part
 
 app.get('/',(req,res) => {
-    res.redirect('/login');
+  if (!req.session.authenticated) {    
+		res.redirect('/login');
+  }
+  else{
+    res.redirect('/main');
+  }
 });
 
 // Redirect to Login Page (Not Logging in)/ Main Page (Logging in)
@@ -213,7 +218,7 @@ app.post('/update', (req, res) => {
 
     // Construct the update query
     const updateDoc = {
-      $set: {
+      $set: { // Auto fill in the form with existing info
       	inv_id: req.body.id,
         inv_name: req.body.inv_name,
         inv_type: req.body.type,
@@ -231,16 +236,6 @@ app.post('/update', (req, res) => {
     });
   });
 });
-
-const findDocument = (db, criteria, callback) => {
-    let cursor = db.collection('Inventory').find(criteria);
-    console.log(`findDocument: ${JSON.stringify(criteria)}`);
-    cursor.toArray((err,docs) => {
-        assert.equal(err,null);
-        console.log(`findDocument: ${docs.length}`);
-        callback(docs);
-    });
-}
 
 // Restful API
 
