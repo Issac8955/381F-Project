@@ -304,12 +304,16 @@ app.put('/api/inventory/:inv_id', async (req,res) => {
     }
   };
   const data = await db.collection('Inventory').findOne({inv_id: req.params.inv_id});
+  if(data){
   await db.collection('Inventory').updateOne({_id: data._id}, updateDoc, (error, result) => {
   if (error) throw error;
   console.log('Document updated successfully from inv_id ' + req.params.inv_id + ' to ' + req.body.inv_id);
   client.close();
   console.log("Closed DB connection");
 });
+}else{
+  res.status(404).json({ message: 'Invalid inventory_id' });
+}
   client.close();
 });
 
