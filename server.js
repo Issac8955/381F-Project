@@ -82,8 +82,8 @@ app.post('/login', (req,res) => {
 	var username = req.body.username;
 	var password = req.body.password;
 	users.forEach((user) => {
+    console.log(user.username)
 		if (user.name == username && user.password == password) {
-			
 			req.session.authenticated = true;        // 'authenticated': true
 			req.session.username = req.body.username;
 		}
@@ -153,7 +153,6 @@ app.get('/delete?:id', (req,res) => {
     client.connect((err) => {
         assert.equal(null, err);
         console.log("Connected successfully to MongoDB.");
-        console.log(typeof(deletedID));
         const db = client.db(dbName);
         
         db.collection("Inventory").deleteOne({_id: ObjectID(deletedID)},(err,result) =>{
@@ -165,6 +164,27 @@ app.get('/delete?:id', (req,res) => {
         });
         res.redirect('/main');
     });
+
+//Delete
+app.get('/delete?:id', (req,res) => {
+  console.log("User entered delete page");
+  //Create new client to fetch the data
+  const client = new MongoClient(mongourl);
+  //Catch the specific id and used as a conditional parameter
+  const deletedID = req.query._id;
+  client.connect((err) => {
+      assert.equal(null, err);
+      const db = client.db(dbName);
+      db.collection("Inventory").deleteOne({_id: ObjectID(deletedID)},(err,result) =>{
+          if(err)
+          throw err;
+          client.close();
+          console.log("Data has been deleted");
+          });
+      });
+      res.redirect('/main');
+  });
+
 
 // Update 
 app.get('/update', async (req, res) => {
@@ -173,31 +193,7 @@ app.get('/update', async (req, res) => {
   console.log("_id:",id);
   // Connect to MongoDB
   await client.connect();
-  const db = client.db(dbName);
-
-
-//Delete
-app.get('/delete?:id', (req,res) => {
-    console.log("User entered delete page");
-    const client = new MongoClient(mongourl);
-    const deletedID = req.query._id;
-    client.connect((err) => {
-        assert.equal(null, err);
-        console.log("Connected successfully to MongoDB.");
-        console.log(typeof(deletedID));
-        const db = client.db(dbName);
-        
-        db.collection("Inventory").deleteOne({_id: ObjectID(deletedID)},(err,result) =>{
-            if(err)
-            throw err;
-            client.close();
-            console.log("Data has been deleted");
-            });
-        });
-
-        res.redirect('/main');
-    });
-    
+  const db = client.db(dbName);    
   // Fetch the document to be updated
   const item = await db.collection("Inventory").findOne({ _id: ObjectID(id) });
 
@@ -240,9 +236,37 @@ app.post('/update', (req, res) => {
 // Restful API
 
 // Create API
+app.post('/api/inventory', (req,res) => {
+    console.log("Create with API");
+    const client = new MongoClient(mongourl);
+    client.connect((err) => {
+        assert.equal(null, err);
+        console.log("Connected successfully to MongoDB.");
+        const db = client.db(dbName);
+        const document = {	
+            inv_id: req.body.inv_id,
+            inv_name: req.body.inv_name,
+            inv_type: req.body.inv_type,
+            quantity: req.body.quantity
+        };
+
+        // Check all the fields of the form are filled in
+            console.log("OK for creating a new document");
+            createDocument(db, document, () => {
+            console.log("Created new document successfully");
+            client.close();
+            console.log("Closed DB connection");
+    });
+    client.close();
+});
+
+
+});
+
 
 // Read API
 app.get('/api/inventory/:inv_id', (req, res) => {
+  console.log("Read with API");
 	if (req.params.inv_id) {
     		let inventory = {};
     		inventory['inv_id'] = req.params.inv_id;
@@ -266,6 +290,29 @@ app.get('/api/inventory/:inv_id', (req, res) => {
 });
 
 // Update API
+app.put('/api/inventory/:inv_id', async (req,res) => {
+  console.log("Update with API");
+  const client = new MongoClient(mongourl);
+  await client.connect();
+  const db = client.db(dbName);
+  const updateDoc = {
+    $set: {
+      inv_id: req.body.inv_id,
+      inv_name: req.body.inv_name,
+      inv_type: req.body.inv_type,
+      quantity: req.body.quantity
+    }
+  };
+  const data = await db.collection('Inventory').findOne({inv_id: req.params.inv_id});
+  await db.collection('Inventory').updateOne({_id: data._id}, updateDoc, (error, result) => {
+  if (error) throw error;
+  console.log('Document updated successfully from inv_id ' + req.params.inv_id + ' to ' + req.body.inv_id);
+  client.close();
+  console.log("Closed DB connection");
+});
+  client.close();
+});
+
 
 // Delete API
 
