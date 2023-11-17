@@ -58,7 +58,7 @@ app.get('/main', async (req,res) => {
         var dataSet = new Array();
         //res.render('main',{name:req.session.username});
         //read data
-        const data = db.collection("Inventory").find();
+        const data = db.collection("Inventory").find().sort({"quantity" : 1});
         await data.forEach((element) =>{
             dataSet.push(element);
         });
@@ -129,7 +129,7 @@ app.post('/create', (req, res) => {
             inv_id: req.body.id,
             inv_name: req.body.inv_name,
             inv_type: req.body.type,
-            quantity: req.body.quantity
+            quantity: parseInt(req.body.quantity)
         };
 
         // Check all the fields of the form are filled in
