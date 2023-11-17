@@ -218,7 +218,7 @@ app.post('/update', (req, res) => {
       	inv_id: req.body.id,
         inv_name: req.body.inv_name,
         inv_type: req.body.type,
-        quantity: req.body.quantity
+        quantity: parseInt(req.body.quantity)
       }
     };
 
@@ -247,7 +247,7 @@ app.post('/api/inventory', (req,res) => {
             inv_id: req.body.inv_id,
             inv_name: req.body.inv_name,
             inv_type: req.body.inv_type,
-            quantity: req.body.quantity
+            quantity: parseInt(req.body.quantity)
         };
 
         // Check all the fields of the form are filled in
@@ -300,7 +300,7 @@ app.put('/api/inventory/:inv_id', async (req,res) => {
       inv_id: req.body.inv_id,
       inv_name: req.body.inv_name,
       inv_type: req.body.inv_type,
-      quantity: req.body.quantity
+      quantity: parseInt(req.body.quantity)
     }
   };
   const data = await db.collection('Inventory').findOne({inv_id: req.params.inv_id});
