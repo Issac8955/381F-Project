@@ -319,6 +319,27 @@ app.put('/api/inventory/:inv_id', async (req,res) => {
 
 
 // Delete API
-
+app.delete('/api/inventory/:inv_id', (req, res) => {
+  console.log("Delete with API");
+	if (req.params.inv_id) {
+    		let inventory = {};
+    		inventory['inv_id'] = req.params.inv_id;
+    		const client = new MongoClient(mongourl);
+    		client.connect((err) => {
+      			assert.equal(null, err);
+      			const db = client.db(dbName);
+      			db.collection('Inventory').deleteMany(inventory,(err, results) =>{
+      			                assert.equal(err,null);
+                			client.close();
+                			res.status(200).json(results).end();
+      			});
+      		});
+    	}else {
+        res.status(500).json({"error": "missing Inv_id"});       
+    }
+});    		
+    		
+    		
+  
 //Create the server with port 8099
 app.listen(8099);
