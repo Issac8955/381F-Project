@@ -22,12 +22,12 @@
         <form action="/update" method="POST">
                 <input type="hidden" name="_id" value="<%= item._id %>">
                 <div class="mb-3">
-                    <label for="id" class="form-label">Inventory ID</label>
-                    <input type="text" class="form-control" id="id" name="id" value="<%= item.inv_id%>">
-                </div>
-                <div class="mb-3">
                     <label for="inv_name" class="form-label">Inventory Name</label>
                     <input type="text" class="form-control" id="inv_name" name="inv_name" value="<%= item.inv_name %>">
+                </div>
+		<div class="mb-3">
+                    <label for="id" class="form-label">Inventory ID</label>
+                    <input type="text" class="form-control" id="id" name="id" value="<%= item.inv_id%>">
                 </div>
                 <div class="mb-3">
                     <label for="type" class="form-label">Inventory Type</label>
