@@ -57,20 +57,22 @@ If the `Logout` button on the Main Page is clicked => The cookie is cleared and 
 1. For Browser (Render): Input `https://s381f-project-group5.onrender.com/api/inventory/inv_id` in the URL Part, Please Replace `inv_id` with the Inventory ID that would like to Search/ Read
 For example: `https://s381f-project-group5.onrender.com/api/inventory/BK001` is finding an inventory item with ID: BK001
 2. For Browser (localhost): Input `https://localhost:8099/api/inventory/inv_id`
-3. For Command Line Tool: Input `curl -v GET https://localhost:8099/api/inventory/inv_id`
+3. For Command Line Tool(Windows CMD/ Git Bash/ Ubuntu with Render): Input `curl -v GET https://localhost:8099/api/inventory/inv_id`
 4. It should return a JSON Object of the inventory item with the corresponding ID
 
 ## 2. Create API
 1.  For Command Line Tool(localhost): Input `curl -X POST -H 'Content-Type: application/json' -d '{"inv_id":"BK1000","inv_name": "Pascal", "inv_type": "Book", "quantity":50}' -i http://localhost:8099/api/inventory`
-2.  For Command Line Tool(Render): Input `curl -X POST -H 'Content-Type: application/json' -d '{"inv_id":"BK1000","inv_name": "Pascal", "inv_type": "Book", "quantity":50}' -i https://s381f-project-group5.onrender.com/api/inventory`
-3.  It will create an item with ID: BK1000, Name: Pascal, Type: Book, Quantity: 50
+2.  For Command Line Tool(Window CMD with Render): Input `curl -X POST -H "Content-Type: application/json" -d "{\"inv_id\":\"BK1000\",\"inv_name\":\"Pascal\",\"inv_type\":\"Book\",\"quantity\":50}" https://s381f-project-group5.onrender.com/api/inventory`
+3.  For Command Line Tool (Git Bash/ Ubuntu with Render): Input `curl -X POST -H 'Content-Type: application/json' -d '{"inv_id":"BK1000","inv_name": "Pascal", "inv_type": "Book", "quantity":50}' -i https://s381f-project-group5.onrender.com/api/inventory`
+4.  It will create an item with ID: BK1000, Name: Pascal, Type: Book, Quantity: 50
 
 ## 3. Update API
 1.  For Command Line Tool(localhost): Input `curl -v -X PUT -H "Content-Type: application/json" -d '{"inv_id":"BK1000","inv_name": "Pascal", "inv_type": "Book", "quantity":49}' -i http://localhost:8099/api/inventory/BK1000`
-2.  For Command Line Tool(Render): Input `curl -v -X PUT -H 'Content-Type: application/json' -d '{"inv_id":"BK1000","inv_name": "Pascal", "inv_type": "Book", "quantity":49}' -i https://s381f-project-group5.onrender.com/api/inventory/BK1000`
-3.  It will update the quantity of the item with ID: BK1000
+2.  For Command Line Tool(Render): Input `curl -v -X PUT -H "Content-Type: application/json" -d "{\"inv_id\":\"BK1000\",\"inv_name\":\"Pascal\",\"inv_type\":\"Book\",\"quantity\":49}" https://s381f-project-group5.onrender.com/api/inventory/BK4000}' -i https://s381f-project-group5.onrender.com/api/inventory/BK1000`
+3.  For Command Line Tool (Git Bash/ Ubuntu with Render): Input `curl -v -X POST -H 'Content-Type: application/json' -d '{"inv_id":"BK1000","inv_name": "Pascal", "inv_type": "Book", "quantity":49}' https://s381f-project-group5.onrender.com/api/inventory`
+4.  It will update the quantity of the item with ID: BK1000
 
 ## 4. Delete API
-1. For Command Line Tool(localhost): Input `curl-X DELETE http://localhost:8099/api/booking/BK1000`
-2. For Command Line Tool(Render): Input `curl-X DELETE https://s381f-project-group5.onrender.com/api/booking/BK1000`
+1. For Command Line Tool(localhost): Input `curl-X DELETE http://localhost:8099/api/inventory/BK1000`
+2. For Command Line Tool(Windows CMD/ Git Bash/ Ubuntu with Render): Input `curl-X DELETE https://s381f-project-group5.onrender.com/api/inventory/BK1000`
 3. It will delete the item with ID: BK1000
